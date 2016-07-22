@@ -4,13 +4,19 @@ var areaW = 600;
 var areaH = 600;
 var targetW = 30;
 var targetH = 30;
+var targetSpeed = 3000;
 var score = 0;
 var showScore = document.getElementById("score");
+var showLevel = document.getElementById("level");
+var level = 1;
+var counter = 1;
+var changeLevelAfterScore = 3;
+var moveInterval;
 
 
-function placeTarget()
-{
-    var maxX = areaW - targetW;    var maxY = areaH - targetH;
+function placeTarget() {
+    clearInterval(moveInterval);
+    var maxX = areaW - targetW; var maxY = areaH - targetH;
     var targetX, targetY;
     targetX = Math.floor(Math.random() * (maxX + 1));
     targetY = Math.floor(Math.random() * (maxY + 1));
@@ -18,35 +24,43 @@ function placeTarget()
     target.style.left = targetX + "px";
     target.addEventListener("click", scoreUp, false);
 
+
+    moveInterval = setInterval(placeTarget, targetSpeed);
+
     //Math.floor rounds "down". Math.random gives 0 to 0.99999 inclusive... NOT 1.
     //To get min-to-max "both inclusive" use following scheme:
     //Math.floor(Math.random() * (max-min+1)) + min;
 }
 
-function setSpeed() {
-
+function startTarget() {
+    //initial target pos on load=left-upper corner.
     area.style.width = areaW + "px";
     area.style.height = areaH + "px";
     target.style.width = targetW + "px";
     target.style.height = targetH + "px";
 
-    setInterval(placeTarget, 3000);
-
-
+    //move target to new random pos
+    placeTarget();
 }
 
-function scoreUp()
-{
+function scoreUp() {
     ++score;
     showScore.innerHTML = "Score: " + score;
     target.removeEventListener("click", scoreUp, false);
 
+    
+    if (counter % changeLevelAfterScore == 0)
+    {
+        targetSpeed = targetSpeed - 500;
+        showLevel.innerHTML = "Level: " + ++level;
+    }
+    counter++;
 }
 
 
 
 
-window.addEventListener("load", setSpeed, false);
+window.addEventListener("load", startTarget, false);
 
 
 
