@@ -4,6 +4,9 @@ var areaW = 600;
 var areaH = 600;
 var targetW = 30;
 var targetH = 30;
+var score = 0;
+var showScore = document.getElementById("score");
+
 
 function placeTarget()
 {
@@ -13,6 +16,7 @@ function placeTarget()
     targetY = Math.floor(Math.random() * (maxY + 1));
     target.style.top = targetY + "px";
     target.style.left = targetX + "px";
+    target.addEventListener("click", scoreUp, false);
 
     //Math.floor rounds "down". Math.random gives 0 to 0.99999 inclusive... NOT 1.
     //To get min-to-max "both inclusive" use following scheme:
@@ -28,7 +32,20 @@ function setSpeed() {
 
     setInterval(placeTarget, 3000);
 
+
 }
+
+function scoreUp()
+{
+    ++score;
+    showScore.innerHTML = "Score: " + score;
+    target.removeEventListener("click", scoreUp, false);
+
+}
+
+
+
+
 window.addEventListener("load", setSpeed, false);
 
 
