@@ -2,8 +2,8 @@
 var target = document.getElementById("target");
 var areaW = 600;
 var areaH = 600;
-var targetW = 30;
-var targetH = 30;
+var targetW = 145; //fly.gif aspect ratio is 1.605 width/height
+var targetH = 90;
 var targetSpeed = 3000;
 var score = 0;
 var showScore = document.getElementById("score");
@@ -46,7 +46,7 @@ function startTarget() {
 function scoreUp() {
     ++score;
     showScore.innerHTML = "Score: " + score;
-    target.removeEventListener("click", scoreUp, false);
+    target.removeEventListener("click", scoreUp, false);//cannot 2nd click till target moves
 
     
     if (counter % changeLevelAfterScore == 0)
@@ -57,10 +57,23 @@ function scoreUp() {
     counter++;
 }
 
+function speedReset()
+{
+    targetSpeed = 3000;
+    startTarget();
+}
 
-
+function gameReset()
+{
+    targetSpeed = 3000;
+    startTarget();
+    score = 0; showScore.innerHTML = "Score: " + score;
+    level = 1; showLevel.innerHTML = "Level: " + level;
+}
 
 window.addEventListener("load", startTarget, false);
+document.getElementById("btnSpeedReset").addEventListener("click", speedReset ,false);
+document.getElementById("btnGameReset").addEventListener("click", gameReset ,false);
 
 
 
