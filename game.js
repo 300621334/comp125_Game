@@ -1,7 +1,7 @@
 ﻿var area = document.getElementById("area");
 var target = document.getElementById("target");
-var areaW = 600;
-var areaH = 600;
+var areaW = 500;
+var areaH = 720;
 var targetW = 145; //fly.gif aspect ratio is 1.605 width/height
 var targetH = 90;
 var targetSpeed = 3000;
@@ -36,11 +36,7 @@ function startTarget() {
     //initial target pos on load=left-upper corner.
     area.style.width = areaW + "px";
     area.style.height = areaH + "px";
-    target.style.width = targetW + "px";
-    target.style.height = targetH + "px";
-
-    //move target to new random pos
-    placeTarget();
+   
 }
 
 function scoreUp() {
@@ -60,20 +56,46 @@ function scoreUp() {
 function speedReset()
 {
     targetSpeed = 3000;
+    level = 1; showLevel.innerHTML = "Level: " + level;
     startTarget();
 }
 
 function gameReset()
 {
     targetSpeed = 3000;
-    startTarget();
     score = 0; showScore.innerHTML = "Score: " + score;
     level = 1; showLevel.innerHTML = "Level: " + level;
+    startTarget();
+
+}
+
+function startGame()
+{
+    target.style.width = targetW + "px";
+    target.style.height = targetH + "px";
+
+
+    var targetEle = document.getElementById("target");
+
+    var targetImageSelected = document.querySelectorAll("aside input");
+    if(targetImageSelected[0].checked)
+        targetEle.style.backgroundImage = "url(monkey.gif)";
+    else if (targetImageSelected[1].checked)
+        targetEle.style.backgroundImage = "url(fly.gif)";
+
+
+    //move target to new random pos
+    placeTarget();
 }
 
 window.addEventListener("load", startTarget, false);
 document.getElementById("btnSpeedReset").addEventListener("click", speedReset ,false);
-document.getElementById("btnGameReset").addEventListener("click", gameReset ,false);
+document.getElementById("btnGameReset").addEventListener("click", gameReset, false);
+
+document.getElementById("startGame").addEventListener("click", startGame, false);
+
+
+
 
 
 

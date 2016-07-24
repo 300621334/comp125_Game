@@ -13,14 +13,18 @@ background-position
         #area {position:relative; background-color:aquamarine;     
                  background-image:url(leaf.gif);
                  background-size:cover;
+                 margin-left:auto;
+                 margin-right:auto;
         }
         #target {position:absolute; /*background-color:brown;*/  z-index:4;
-                 background-image:url(fly.gif);
+                 /*background-image:url(monkey.gif);*/
                  background-size:cover;
         }
-        h1 {margin-left:620px; margin-top:-600px;}
+        h1 { position:absolute; right:-100px; /*margin-left:620px; margin-top:-600px;*/}
+        aside{position:absolute; left:-130px; }
+        aside img { height:100px; width:100px; vertical-align:middle;}
        
-        
+        #area:hover {cursor: /*url(spiderweb.png),*/ auto; }
 
     </style>
 </head>
@@ -28,14 +32,20 @@ background-position
     
     <section id="area">
         <div id="target"></div>
-       
+        <h1>
+            <p id="score">Score: 0</p>
+            <p id="level">Level: 1</p>
+            <p id="btnSpeedReset"><button>Reset Speed</button></p>
+            <p id="btnGameReset"><button>Reset Game</button></p>
+        </h1>
+
+        <aside id="selectimg">
+            <p><input id="monkey" type="radio" name="radImgSelected" /><img src="monkey.jpg" /></p>
+            <p><input id="fly" type="radio" name="radImgSelected" /><img src="fly.jpg" />    </p>
+            <button id="startGame">Start Game</button>
+        </aside>
     </section>
-    <h1>
-        <p id="score">Score: 0</p> 
-        <p id="level">Level: 1</p>
-        <p id="btnSpeedReset"><button>Reset Speed</button></p>
-        <p id="btnGameReset"><button>Reset Game</button></p>
-    </h1>
+    
     
     
 
