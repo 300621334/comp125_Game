@@ -22,7 +22,7 @@ function placeTarget() {
     targetY = Math.floor(Math.random() * (maxY + 1));
     target.style.top = targetY + "px";
     target.style.left = targetX + "px";
-    target.addEventListener("click", scoreUp, false);
+    target.addEventListener("click", scoreUp, false);//ONLY if successful click then goes to scoreUp.
 
 
     moveInterval = setInterval(placeTarget, targetSpeed);
@@ -40,6 +40,8 @@ function startTarget() {
 }
 
 function scoreUp() {
+    clearInterval(moveInterval);//on successful click, stop movement of target. To show fireworks.
+    showFirework();
     ++score;
     showScore.innerHTML = "Score: " + score;
     target.removeEventListener("click", scoreUp, false);//cannot 2nd click till target moves
@@ -51,6 +53,16 @@ function scoreUp() {
         showLevel.innerHTML = "Level: " + ++level;
     }
     counter++;
+}
+
+function showFirework()
+{
+    var targetEle = document.getElementById("target");
+    targetEle.style.backgroundImage = "url(firework.gif)";
+    //targetEle.style.backgroundImage = "url(splash.gif)";
+    //http://gifduration.konstochvanligasaker.se/ to see duration of firework.GIF w is 2480 millisec. 
+    setTimeout(function () { moveInterval = setInterval(placeTarget, targetSpeed); loadSelectedImg(); placeTarget(); }, 1600);
+    
 }
 
 function speedReset()
@@ -76,16 +88,26 @@ function startGame()
 
 
     var targetEle = document.getElementById("target");
-
     var targetImageSelected = document.querySelectorAll("aside input");
     if(targetImageSelected[0].checked)
         targetEle.style.backgroundImage = "url(monkey.gif)";
     else if (targetImageSelected[1].checked)
         targetEle.style.backgroundImage = "url(fly.gif)";
 
+    loadSelectedImg();//load selected target img
 
     //move target to new random pos
     placeTarget();
+}
+
+function loadSelectedImg()
+{
+    var targetEle = document.getElementById("target");
+    var targetImageSelected = document.querySelectorAll("aside input");
+    if (targetImageSelected[0].checked)
+        targetEle.style.backgroundImage = "url(monkey.gif)";
+    else if (targetImageSelected[1].checked)
+        targetEle.style.backgroundImage = "url(fly.gif)";
 }
 
 window.addEventListener("load", startTarget, false);
