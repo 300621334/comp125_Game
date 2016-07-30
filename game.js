@@ -1,9 +1,9 @@
 ﻿var area = document.getElementById("area");
 var target = document.getElementById("target");
-var areaW = 500;
-var areaH = 720;
-var targetW = 145; //fly.gif aspect ratio is 1.605 width/height
-var targetH = 90;
+var aim = document.getElementById("aim");
+var areaW = 500, areaH = 720;
+var targetW = 145, targetH = 90; //fly.gif aspect ratio is 1.605 width/height
+var aimW = 50, aimH = 50, aimL = 0, aimT = 0;
 var targetSpeed = 3000;
 var score = 0;
 var showScore = document.getElementById("score");
@@ -12,6 +12,17 @@ var level = 1;
 var counter = 1;
 var changeLevelAfterScore = 3;
 var moveInterval;
+
+
+var canvas = document.createElement("canvas");
+canvas.width = 500;
+canvas.height = 720;
+area.appendChild(canvas);
+var ctx = canvas.getContext("2d");
+canvas.style.marginLeft= "auto";
+canvas.style.marginRight = "auto";
+canvas.style.position = "absolute";
+canvas.style.top = "0";
 
 
 function placeTarget() {
@@ -85,7 +96,7 @@ function startGame()
 {
     target.style.width = targetW + "px";
     target.style.height = targetH + "px";
-
+    
 
     var targetEle = document.getElementById("target");
     var targetImageSelected = document.querySelectorAll("aside input");
@@ -98,7 +109,19 @@ function startGame()
 
     //move target to new random pos
     placeTarget();
+    drawAim();
 }
+function drawAim() {
+    aim.style.width = aimW + "px";
+    aim.style.height = aimH + "px";
+    aim.style.backgroundColor = "red";
+    aim.style.borderRadius = (aimH * 0.5) + "px";
+    aim.style.position = "absolute";
+    aim.style.left = aimL + "px";
+    aim.style.top = aimT + "px";
+    //aim.style.zIndex = "9";
+}
+
 
 function loadSelectedImg()
 {
@@ -109,6 +132,17 @@ function loadSelectedImg()
     else if (targetImageSelected[1].checked)
         targetEle.style.backgroundImage = "url(fly.gif)";
 }
+
+
+addEventListener("keydown", function (e) {
+    if(e.keyCode == 40)
+    {
+        e.preventDefault(); //prevent downarrow from scrolling scroll-bar.
+        drawAim(); //re-draw aim
+        aimT = aimT + 5; //move aim
+    }
+}, false);
+
 
 window.addEventListener("load", startTarget, false);
 document.getElementById("btnSpeedReset").addEventListener("click", speedReset ,false);
