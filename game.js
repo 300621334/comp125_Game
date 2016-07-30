@@ -134,12 +134,32 @@ function loadSelectedImg()
 }
 
 
-addEventListener("keydown", function (e) {
-    if(e.keyCode == 40)
+
+addEventListener("keydown", function (e) //same as window.addEventListener. Moves the aim.
+{
+    e.preventDefault(); //prevent down arrow from scrolling scroll-bar.
+    var speed = 10;
+
+    if (e.keyCode == 40 && //down arrow
+        aimT <= (areaH - speed - aimH)) //areaH-speed so that increenting stops when ain get to edges. -ainH so that aim doesn't go out of the area.
     {
-        e.preventDefault(); //prevent downarrow from scrolling scroll-bar.
         drawAim(); //re-draw aim
-        aimT = aimT + 5; //move aim
+        aimT = aimT + speed; //move aim
+    }
+    if (e.keyCode == 38 && aimT>=speed)//up arrow
+    {
+        drawAim(); 
+        aimT = aimT - speed;
+    }
+    if (e.keyCode == 37 && aimL>=speed)//left arrow
+    {
+        drawAim(); 
+        aimL = aimL - speed;
+    }
+    if (e.keyCode == 39 && aimL<= (areaW-speed-aimW))//right arrow
+    {
+        drawAim(); 
+        aimL = aimL + speed;
     }
 }, false);
 
